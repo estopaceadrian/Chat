@@ -5,6 +5,7 @@ import { auth, db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
+import image from '../img/trees.jpg';
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -56,26 +57,57 @@ const Register = () => {
   };
 
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">Stopey Chat</span>
-        <span className="title">Register</span>
-        <form onSubmit={handleSubmit}>
-          <input type="text" placeholder="Display name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+    <div className="relative w-full h-screen bg-zinc-900/90">
+      <img
+        src={image}
+        alt=""
+        className="absolute w-full h-full object-cover mix-blend-overlay "
+      />
+      <div className="flex justify-center items-center h-full">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-[400px] w-full mx-auto bg-white p-8"
+        >
+          <h4 className="text-4xl font-bold text-center py-4 ">STPC.</h4>
+          <input
+            type="text"
+            placeholder="Display Name"
+            className="border relative bg-gray-100 p-2 w-full mb-4"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="border relative bg-gray-100 p-2 w-full mb-4"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="border relative bg-gray-100 p-2 w-full mb-4"
+          />
+
           <input style={{ display: 'none' }} type="file" id="file" />
-          <label htmlFor="file">
+          <label htmlFor="file" className="flex relative cursor-pointer gap-2">
             <img src={Add} alt="" />
-            <span>Add an avatar</span>
+            <span className="text-indigo-600 relative hover:text-indigo-400 mt-4">
+              Add an avatar
+            </span>
           </label>
-          <button>Sign Up</button>
+
+          <button className="border relative w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-400 text-white">
+            Sign Up
+          </button>
           {loading && 'Uploading and compressing the image please wait...'}
           {err && <span style={{ color: 'red' }}>Something went wrong</span>}
+          <p>
+            You do have an account?{' '}
+            <Link
+              to="/login"
+              className="text-indigo-600 relative hover:text-indigo-400"
+            >
+              Login
+            </Link>
+          </p>
         </form>
-        <p>
-          You do have an account? <Link to="/login">Login</Link>
-        </p>
       </div>
     </div>
   );

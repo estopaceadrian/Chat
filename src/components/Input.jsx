@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
 import { useState } from 'react';
-import { async } from '@firebase/util';
+
 import {
   arrayUnion,
   doc,
