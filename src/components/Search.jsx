@@ -72,27 +72,34 @@ const Search = () => {
         });
       }
     } catch (error) {}
-    //create userchats
 
     setUser(null);
     setUsername('');
   };
   return (
-    <div className="search">
-      <div className="searchForm">
+    <div className="">
+      <div className="p-3">
         <input
           type="text"
           placeholder="Find a user"
           onChange={(e) => setUsername(e.target.value)}
           onKeyDown={handleKey}
           value={username}
+          className="p-2 w-full bg-gray-100 text-xs focus:outline-none rounded-md  text-black"
         />
       </div>
       {err && <span>User Not Found!</span>}
       {user && (
-        <div className="userChat" onClick={handleSelect}>
-          <img src={user.photoURL} alt="" />
-          <div className="userChatInfo">
+        <div
+          onClick={handleSelect}
+          className="p-2 flex justify-center flex-col ml-2"
+        >
+          <img
+            src={user.photoURL}
+            alt=""
+            className="w-10 h-10 rounded-full hover:bg-slate-900 cursor-pointer"
+          />
+          <div className="text-white text-xs cursor-pointer mt-2">
             <span>{user.displayName}</span>
           </div>
         </div>

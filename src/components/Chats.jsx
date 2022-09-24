@@ -32,19 +32,27 @@ const Chats = () => {
   };
 
   return (
-    <div className="chat">
+    <div className="flex flex-col">
       {Object.entries(chats)
         ?.sort((a, b) => b[1].date - a[1].date)
         .map((chat) => (
           <div
-            className="userChat"
+            className="flex m-3 bg-white rounded-lg p-2"
             key={chat[0]}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
-            <img src={chat[1].userInfo.photoURL} alt="" />
-            <div className="userChatInfo">
-              <span>{chat[1].userInfo.displayName}</span>
-              <p>{chat[1].lastMessage?.text}</p>
+            <img
+              src={chat[1].userInfo.photoURL}
+              alt=""
+              className="w-14 h-14 rounded-full object-contain "
+            />
+            <div className="flex-grow p-2">
+              <span className="font-semibold text-gray-900">
+                {chat[1].userInfo.displayName}
+              </span>
+              <p className="text-xs text-gray-400">
+                {chat[1].lastMessage?.text}
+              </p>
             </div>
           </div>
         ))}

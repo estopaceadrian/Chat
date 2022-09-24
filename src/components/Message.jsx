@@ -16,8 +16,8 @@ const Message = ({ message }) => {
   }, [message]);
 
   return (
-    <div className="message owner">
-      <div className="messageInfo">
+    <div className="bg-gray-100 w-3/6 m-8 rounded-tl-lg rounded-r-lg p-1 flex">
+      <div className="">
         <img
           src={
             message.senderId === currentUser.uid
@@ -25,12 +25,15 @@ const Message = ({ message }) => {
               : data.user.photoURL
           }
           alt=""
+          className="w-11 h-11 rounded-full m-3"
         />
-        <span>just now</span>
+        <span className="text-sm text-gray-400">just now</span>
       </div>
-      <div className="messageContent">
-        <p>{message.text}</p>
-        {message.img && <img src={message.image} alt="" />}
+      <div className="flex">
+        <div className="p-3">
+          <p className="text-md text-gray-600">{message.text}</p>
+          {message.img && <img src={message.image} alt="" />}
+        </div>
       </div>
     </div>
   );

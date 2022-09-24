@@ -76,14 +76,15 @@ const Input = () => {
   };
 
   return (
-    <div className="input">
+    <div className="w-full flex flex-none p-3">
       <input
         type="text"
         placeholder="Type something..."
         onChange={(e) => setText(e.target.value)}
         value={text}
+        className="flex-grow focus:outline-none p-3 mr-2"
       />
-      <div className="send">
+      <div className="flex items-center ">
         <img src={Img} alt="" />
         <input
           type="file"
@@ -94,7 +95,12 @@ const Input = () => {
         <label htmlFor="file">
           <img src={Attach} alt="" />
         </label>
-        <button onClick={handleSend}>Send</button>
+        <button
+          onClick={handleSend}
+          className="hover:bg-sky-600 bg-sky-800 text-white p-3 rounded"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
