@@ -5,8 +5,9 @@ import { auth } from '../firebase';
 import image from '../img/login.jpg';
 
 const Login = () => {
-  const [err, setError] = useState(false);
+  const [error, setError] = useState(' ');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,9 +16,37 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
-    } catch (err) {
-      setError(true);
+      setLoading(true);
+      setTimeout(function () {
+        navigate('/');
+      }, 1200);
+    } catch (error) {
+      if (
+        error.code === 'auth/invalid-email' ||
+        error.code === 'auth/user-disabled' ||
+        error.code === 'auth/user-not-found'
+      ) {
+        setError(error.message);
+      } else if (error.code === 'auth/wrong-password') {
+        setError(error.message);
+      } else {
+        console.log(error.message);
+      }
+    }
+  };
+
+  const loader = () => {
+    if (loading) {
+      return (
+        <div class="flex items-center justify-center space-x-2">
+          <div
+            class="spinner-border animate-spin inline-block w-12 h-12 border-4 rounded-full"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      );
     }
   };
 
@@ -36,19 +65,20 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            className="flex flex-col p-2 w-full mb-4"
+            className="flex flex-col p-2 w-full mt-4"
           />
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
           <input
             type="password"
             placeholder="Password"
-            className="flex flex-col p-2 w-full"
+            className="flex flex-col p-2 w-full mt-4"
           />
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
 
           <button className="border w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-400 text-white">
             Sign In
           </button>
-          {err && <span style={{ color: 'red' }}>Something went wrong</span>}
-
+          {loader}
           <p>
             You don't have an account?{' '}
             <Link to="/register" className="text-indigo-600">

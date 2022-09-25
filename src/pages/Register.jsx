@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import image from '../img/trees.jpg';
 
 const Register = () => {
-  const [err, setErr] = useState(false);
+  const [error, setError] = useState(' ');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -43,16 +43,25 @@ const Register = () => {
             //create empty user chats on firestore
             await setDoc(doc(db, 'userChats', res.user.uid), {});
             navigate('/');
-          } catch (err) {
-            console.log(err);
-            setErr(true);
+          } catch (error) {
+            setError(error.message);
+
             setLoading(false);
           }
         });
       });
-    } catch (err) {
-      setErr(true);
-      setLoading(false);
+    } catch (error) {
+      if (
+        error.code === 'auth/invalid-email' ||
+        error.code === 'auth/user-disabled' ||
+        error.code === 'auth/user-not-found'
+      ) {
+        setError(error.message);
+      } else if (error.code === 'auth/wrong-password') {
+        setError(error.message);
+      } else {
+        console.log(error.message);
+      }
     }
   };
 
@@ -72,33 +81,38 @@ const Register = () => {
           <input
             type="text"
             placeholder="Display Name"
-            className="border relative bg-gray-100 p-2 w-full mb-4"
+            className="border relative bg-gray-100 p-2 w-full mt-4"
           />
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
           <input
             type="email"
             placeholder="Email"
-            className="border relative bg-gray-100 p-2 w-full mb-4"
+            className="border relative bg-gray-100 p-2 w-full mt-4"
           />
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
           <input
             type="password"
             placeholder="Password"
-            className="border relative bg-gray-100 p-2 w-full mb-4"
+            className="border relative bg-gray-100 p-2 w-full mt-4"
           />
-
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
           <input style={{ display: 'none' }} type="file" id="file" />
-          <label htmlFor="file" className="flex relative cursor-pointer gap-2">
+          <label
+            htmlFor="file"
+            className="flex relative cursor-pointer gap-2 mt-4"
+          >
             <img src={Add} alt="" />
             <span className="text-indigo-600 relative hover:text-indigo-400 mt-4">
               Add an avatar
             </span>
           </label>
-
+          <span className="ml-2 text-pink-400 align-center">{error}</span>
           <button className="border relative w-full my-5 py-2 bg-indigo-600 hover:bg-indigo-400 text-white">
             Sign Up
           </button>
           {loading && 'Uploading and compressing the image please wait...'}
-          {err && <span style={{ color: 'red' }}>Something went wrong</span>}
-          <p>
+
+          <p className="font-light">
             You do have an account?{' '}
             <Link
               to="/login"

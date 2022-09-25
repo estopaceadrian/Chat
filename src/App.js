@@ -2,6 +2,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import './styles/index.css';
+import 'tw-elements';
 import {
   BrowserRouter as Router,
   Navigate,

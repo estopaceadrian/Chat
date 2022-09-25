@@ -46,7 +46,7 @@ const Chats = () => {
               alt=""
               className="w-14 h-14 rounded-full object-contain "
             />
-            <div className="flex-grow p-2">
+            <div className="flex-grow   p-2">
               <span className="font-semibold text-gray-900">
                 {chat[1].userInfo.displayName}
               </span>
